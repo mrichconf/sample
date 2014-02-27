@@ -5,8 +5,14 @@ end
 class Calc
   # parse args expression
   def expr(args, count=-1)
-   delims = "[,\n]"
-   parsed = args.split(/#{delims}/)
+   if args =~ /^\\(.)$/
+     delims = "[,\n#{$1}]"
+     parsed = args.split(/#{delims}/)
+     parsed.shift(2)
+   else
+     delims = "[,\n]"
+     parsed = args.split(/#{delims}/)
+   end
    parsed.each { |i|
      raise ArgError, "Invalid delimiter list" if i == ""
    }

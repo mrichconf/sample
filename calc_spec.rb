@@ -46,4 +46,8 @@ describe Calc, "#expr" do
     calc = Calc.new
     expect { calc.expr(" ,\n1,2\n") }.to raise_error(ArgError, 'Invalid delimiter list')
   end
+  it "returns sum when an additional delimeter is specified" do
+    calc = Calc.new
+    calc.expr("\\;\n1;2").should eq (3)
+  end
 end
