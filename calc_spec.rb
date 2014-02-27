@@ -37,4 +37,13 @@ describe Calc, "#expr" do
     calc.expr(" ,2,3").should eq (5)
     calc.expr("1, ,2,3,4,2").should eq (12)
   end
+  it "returns sum for an expression that contains new-lines" do
+    calc = Calc.new
+    calc.expr(" \n1,2").should eq (3)
+    calc.expr("1,2\n3").should eq (6)
+  end
+  it "returns an exception for invalid delimeters" do
+    calc = Calc.new
+    expect { calc.expr(" ,\n1,2\n") }.to raise_error(ArgError, 'Invalid delimiter list')
+  end
 end

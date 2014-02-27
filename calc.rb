@@ -1,8 +1,17 @@
 # calc.rb
+class ArgError < StandardError
+end
+
 class Calc
   # parse args expression
   def expr(args, count=-1)
-   sum(args.split(/,/), count)
+   delims = "[,\n]"
+   parsed = args.split(/#{delims}/)
+   parsed.each { |i|
+     raise ArgError, "Invalid delimiter list" if i == ""
+   }
+   
+   sum(parsed, count)
   end
 
   def sum(terms=[], count=-1)
