@@ -1,10 +1,13 @@
 # calc.rb
 class ArgError < StandardError
 end
+class TermError < StandardError
+end
 
 class Calc
   # parse args expression
   def expr(args, count=-1)
+   negatives=[]
    if args =~ /^\\(.)$/
      delims = "[,\n#{$1}]"
      parsed = args.split(/#{delims}/)
@@ -15,8 +18,10 @@ class Calc
    end
    parsed.each { |i|
      raise ArgError, "Invalid delimiter list" if i == ""
+     negatives.push(i) if i.to_i < 0
    }
    
+   raise TermError, "Negatives not allowed #{negatives.join(',')}"  if negatives.count > 0
    sum(parsed, count)
   end
 

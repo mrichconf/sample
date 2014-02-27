@@ -50,4 +50,9 @@ describe Calc, "#expr" do
     calc = Calc.new
     calc.expr("\\;\n1;2").should eq (3)
   end
+  it "raises exception when a negative number is specified" do
+    calc = Calc.new
+    expect { calc.expr("1,2,-3,5") }.to raise_error(TermError)
+    expect { calc.expr("1,-1,2,-3,5") }.to raise_error(TermError)
+  end
 end
